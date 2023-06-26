@@ -15,8 +15,15 @@ def A(links):
 
 
 def B(list1, list2):
-    list3 = {}
-
+    resList = {}
+    if len(list1) > len(list2):
+        for l in list2:
+            resList[l] = list1[list2.index(l)]
+    else:
+        for l in list1:
+            resList[l] = list2[list1.index(l)]
+    print('\nTask B result: ')
+    print(resList)
 
 def C(l):
     new_list = []
@@ -82,17 +89,15 @@ class E:
         # самое частое слово в этом тексте
         print(f'самое частое слово в этом тексте -> `{_list[0][1]}`, использовалось `{_list[0][0]}` раз.')
 
-
-    def commonWord(self, text):
-
-
-
-    def amountSpecSymb(self, text):
-
-
-
-    def printPalyndorms(self, text):
-
+    # def commonWord(self, text):
+    #
+    #
+    #
+    # def amountSpecSymb(self, text):
+    #
+    #
+    #
+    # def printPalyndorms(self, text):
 
 
 if __name__ == '__main__':
@@ -114,5 +119,8 @@ if __name__ == '__main__':
             list_C.append(line.replace('\n', ''))
     new_list_c = C(list_C)
     print(new_list_c)
+
+    B(list_C, links)
+
 
     run_case_D(D, 'http://httpbin.org/delay/3', 100)
