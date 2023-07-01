@@ -25,6 +25,7 @@ def B(list1, list2):
     print('\nTask B result: ')
     print(resList)
 
+
 def C(l):
     new_list = []
     for it in l:
@@ -60,14 +61,19 @@ def run_case_D(func, path, times):
 
 
 class E:
+
+
     def __init__(self, text):
         self.text = text
 
-    def longestWord(self, text):
+    def commonWord(self):
+        """
+        Этот метод находит самое часто встречающееся слово в тексте
+        """
         lst_no = ['.', ',', ':', '!', '"', "'", '[', ']', '-', '—', '(', ')', '?', '_', '`']  # и т.д.
         lst = []
 
-        for word in text.lower().split():
+        for word in self.text.lower().split():
             if not word in lst_no:
                 _word = word
                 if word[-1] in lst_no:
@@ -89,15 +95,43 @@ class E:
         # самое частое слово в этом тексте
         print(f'самое частое слово в этом тексте -> `{_list[0][1]}`, использовалось `{_list[0][0]}` раз.')
 
-    # def commonWord(self, text):
-    #
-    #
-    #
-    # def amountSpecSymb(self, text):
-    #
-    #
-    #
-    # def printPalyndorms(self, text):
+
+    def maxLengthWord(self):
+        """
+        Этот метод находит самое длинное слово из текста
+        """
+        text = self.text.replace('.', '').replace(',', '').replace(':', '').replace('!', '').replace('?', '').split()
+
+        print('Самое длинное слово в тексте: ')
+        print(', '.join([word for word in text if len(word) == len(sorted(text, key=len)[-1])]).lower())
+
+    def amountSpecSymb(self):
+        """
+        Этот метод подсчитывает общее количество спецсимволов в тексте
+        """
+        lst_no = ['.', ',', ':', '!', '"', "'", '[', ']', '-', '—', '(', ')', '?', '_', '`', ';']
+        res = 0
+        for i in lst_no:
+            res += self.text.count(i)
+        print('Общее кол-во спецсимволов в тексте: ' + str(res))
+
+    def printPalyndorms(self):
+        """
+        Этот метод находит все палиндромы в тексте
+        :return:
+        """
+        list_pal = []
+        for word in self.text.replace('.', '').replace(',', '').replace(':', '').replace('!', '').replace('?', '').split():
+            ls = len(word)
+            if word[:ls // 2] == word[ls // 2 + 1:][::-1]:
+                list_pal.append(word)
+        print('палиндромы в тексте: ' + str(list_pal))
+
+def decorator(func):
+    start_time = time.time()
+    func()
+    task_time = time.time() - start_time
+    print("Время выполнения функции: " + str(task_time))
 
 
 if __name__ == '__main__':
@@ -122,5 +156,19 @@ if __name__ == '__main__':
 
     B(list_C, links)
 
-
     run_case_D(D, 'http://httpbin.org/delay/3', 100)
+
+    text_E = ''
+    with open('E.txt', 'r') as f_e:
+        while True:
+            line = f_e.readline()
+            if not line:
+                break
+            text_E += line
+
+    E_class = E(text_E)
+
+    decorator(E_class.maxLengthWord)
+    decorator(E_class.commonWord)
+    decorator(E_class.amountSpecSymb)
+    decorator(E_class.printPalyndorms)
